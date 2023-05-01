@@ -26,6 +26,7 @@ export interface Code {
   title: string
   descricao: string
   description: string
+  sigtap: string
 }
 
 export default function Codes(props: CodesProps) {
@@ -39,40 +40,70 @@ export default function Codes(props: CodesProps) {
     title: '',
     descricao: '',
     description: '',
+    sigtap: '',
   })
-  const [btn, setBtn] = useState(false)
+  const [btn, setBtn] = useState(0)
 
   function returnTableType(num: number) {
     let str
     switch (num) {
       case 1:
-        str = 'codigoCid10'
+        str = 'cid10'
         break
       case 2:
-        str = 'Two'
+        str = 'cid11'
         break
       case 3:
-        str = 'Three'
+        str = 'cif'
         break
       case 4:
-        str = 'Three'
+        str = 'sigtap'
         break
       default:
-        str = 'Number not recognized'
+        str = ''
     }
 
     return str
   }
 
   useEffect(() => {
-    if (btn)
-      navigation.navigate('Consulta', { cid10: 'Consulta', consulta: response })
+    if (btn) {
+      console.log(response)
+
+      switch (btn) {
+        case 1:
+          navigation.navigate('Consulta', {
+            cid10: 'Consulta',
+            consulta: response,
+          })
+          break
+        case 2:
+          navigation.navigate('ConsultaCid11', {
+            cid11: 'Consulta',
+            consulta: response,
+          })
+          break
+        case 3:
+          navigation.navigate('ConsultaCif', {
+            cif: 'Consulta',
+            consulta: response,
+          })
+          break
+        case 4:
+          navigation.navigate('ConsultaSigtap', {
+            sigtap: 'Consulta',
+            consulta: response,
+          })
+          break
+        default:
+      }
+    }
   }, [response])
 
   const handlePress = (num: number) => {
     const tipo = returnTableType(num)
 
-    fetch(`http://192.168.2.101:8080/${tipo}/${inputValue.toLowerCase()}`, {
+    fetch(`http://192.168.0.106:8080/${tipo}/${inputValue.toLowerCase()}`, {
       mode: 'cors',
     })
       .then((response) => response.json())
@@ -84,6 +115,7 @@ export default function Codes(props: CodesProps) {
           title: '',
           descricao: '',
           description: '',
+          sigtap: '',
         }
 
         if ('title' in consulta) responseObj.title = consulta.title
@@ -94,9 +126,10 @@ export default function Codes(props: CodesProps) {
           responseObj.description = consulta.description
 
         setResponse(responseObj)
-        setBtn(true)
+        setBtn(num)
       })
       .catch((error) => {
+        console.log('Código não encontrado')
         console.error(error)
       })
   }
@@ -228,10 +261,8 @@ export default function Codes(props: CodesProps) {
                 handlePress(1)
               } else if (selectedOption === 'CID-11') {
                 handlePress(2)
-                navigation.navigate('ConsultaCid11', { cid11: 'Consulta' })
               } else if (selectedOption === 'CIF') {
                 handlePress(3)
-                navigation.navigate('ConsultaCif', { cif: 'Consulta' })
               }
             }
             // else if (selectedOption === 'SIGTAP') {
@@ -245,8 +276,4 @@ export default function Codes(props: CodesProps) {
       </View>
     </View>
   )
-}
-
-function sleep(arg0: number) {
-  throw new Error('Function not implemented.')
 }

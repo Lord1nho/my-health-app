@@ -20,7 +20,7 @@ export function CodeQuery() {
   const navigation = useNavigation()
 
   const route = useRoute()
-  const cons = (route.params as RouteParams['Consulta']).consulta
+  const consulta = (route.params as RouteParams['Consulta']).consulta
 
   return (
     <View style={{ backgroundColor: '#94efe5', flex: 1 }}>
@@ -75,16 +75,6 @@ export function CodeQuery() {
         >
           CID-10
         </Text>
-        <Text
-          style={[
-            {
-              textAlign: 'left',
-              fontFamily: 'Bahnschrift',
-            },
-          ]}
-        >
-          {cons.titulo}
-        </Text>
       </StyledText>
 
       <View
@@ -101,19 +91,20 @@ export function CodeQuery() {
         <Text
           style={[
             {
-              textAlign: 'justify',
+              textAlign: 'left',
               fontFamily: 'Bahnschrift',
+              fontSize: 24,
               padding: 16,
             },
           ]}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          {' '}
+          <br />
+          <Text style={{ fontWeight: 'bold' }}>Código:</Text> {consulta.codigo}
+          <br />
+          <br />
+          <Text style={{ fontWeight: 'bold' }}>Título:</Text> {consulta.titulo}
+          <br />
         </Text>
       </View>
       <View style={globalStyles.centerHorizontally}>

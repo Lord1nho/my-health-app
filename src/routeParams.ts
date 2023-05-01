@@ -25,9 +25,15 @@ export type RouteParams = {
   }
   ConsultaCid11: {
     cid11: string
+    consulta: Code
   }
   ConsultaCif: {
     cif: string
+    consulta: Code
+  }
+  ConsultaSigtap: {
+    sigtap: string
+    consulta: Code
   }
   Favoritos: NO_PARAMS
 }
